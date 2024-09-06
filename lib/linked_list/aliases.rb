@@ -11,6 +11,14 @@ module Aliases
     append(value)
   end
 
+  def unshift(value)
+    prepend(value)
+  end
+
+  def shift
+    remove_at(0)
+  end
+
   def [](index)
     at(index)
   end
@@ -25,5 +33,9 @@ module Aliases
 
   def index_of(value)
     find(value)
+  end
+
+  def delete_at(index)
+    remove_at(index)
   end
 end

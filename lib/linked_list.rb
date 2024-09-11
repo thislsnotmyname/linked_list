@@ -41,12 +41,17 @@ class LinkedList
     each_with_index { |node, idx| return node.value if index == idx }
   end
 
+  def []=(index, new_value)
+    each_with_index { |node, idx| return node.value = new_value if index == idx }
+  end
+
   def each
     current_node = @head
     loop do
+      break if current_node.nil?
+
       yield(current_node)
       current_node = current_node.next
-      break if current_node.nil?
     end
   end
 
@@ -100,15 +105,14 @@ class LinkedList
   end
 
   def remove_at(index)
-    previous_node = @head
     each_with_index do |node, idx|
-      if index == idx
-        old_node = node
-        previous_node.next = old_node.next unless idx.zero?
-        @head = @head.next if idx.zero?
-        return old_node
-      end
-      previous_node = node
+      next unless index == idx
+
+      old_node = node
+      self[idx - 1].next = old_node.next unless idx.zero?
+      @head = @head.next if idx.zero?
+      @tail = @head if @head.nil?
+      return old_node
     end
   end
 
